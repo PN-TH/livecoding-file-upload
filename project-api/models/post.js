@@ -15,4 +15,13 @@ const findOne = async (id, failIfNotFound = true) => {
   return null;
 };
 
-module.exports = { findMany, findOne };
+const create = async (formData) => {
+  return db
+    .query(
+      `INSERT INTO posts SET ${definedAttributesToSqlSet(formData)}`,
+      formData
+    )
+    .then((res) => findOne(res.insertId));
+};
+
+module.exports = { findMany, findOne, create };
